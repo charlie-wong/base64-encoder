@@ -243,7 +243,7 @@ mDABKmHBZ/8vwACkAXHUCodrdwAAAABJRU5ErkJggg=="
     </a>
 
     <h2>Online Base64 Encoder & Decoder</h2>
-    <h4>Drop Files Here for Encoding ...</h4>
+    <h4>Drop Files Here for Encoding & Decoding</h4>
     <div id="dropper"></div>
     <div id="results"></div>
 
@@ -273,9 +273,23 @@ mDABKmHBZ/8vwACkAXHUCodrdwAAAABJRU5ErkJggg=="
             files.forEach(function (file) {
                 var reader = new FileReader();
                 // convert file to Base64 encoding
-                reader.readAsDataURL(file);
+                reader.readAsArrayBuffer(file);
                 reader.onload = function (event) {
-                    fileLoaded(file.name, event.target.result);
+                    var is_encoding = true;
+                    var result = event.target.result;
+                    ab2str(result, function(b64txt) {
+		                console.log(b64txt)
+                        if (/^data:text\/[a-z]+;base64,/.test(b64txt)
+                            || /^data:image\/[a-z]+;base64,/.test(b64txt)) {
+                            result = b64txt;
+                            is_encoding = false;
+                            alert("input base64 for D ...");
+                        }
+	                });
+
+                    alert("input data for E ...");
+                    reader.readAsDataURL(file);
+                    fileLoaded(file.name, result, is_encoding);
                 };
             });
             dropper.className = '';
@@ -293,7 +307,27 @@ mDABKmHBZ/8vwACkAXHUCodrdwAAAABJRU5ErkJggg=="
             delete link;
         }
 
-        function fileLoaded(filename, dataUri) {
+        function ab2str(u, f) {
+            var b = new Blob([u]);
+            var r = new FileReader();
+            r.readAsText(b, 'utf-8');
+            r.onload = function() {
+                if(f) {
+                    f.call(null,r.result)
+                }
+            }
+        }
+
+        function fileLoaded(filename, data, is_encoding) {
+            dataUri = null;
+            dataTxt = null;
+            if (is_encoding) {
+                dataUri = data; // base64-encoding
+            } else {
+                dataTxt = data; // base64-decoding
+                return;
+            }
+
             var div = document.createElement("div");
             div.className = 'item';
 
@@ -363,7 +397,7 @@ mDABKmHBZ/8vwACkAXHUCodrdwAAAABJRU5ErkJggg=="
         if (localStorage) {
             for (var filename in localStorage) {
                 if (filename.indexOf("base64-") === 0)
-                    fileLoaded(filename.replace("base64-", ""),
+                    fileLoaded(filename.replace("base64-", "", true),
                                localStorage.getItem(filename));
             }
         }
