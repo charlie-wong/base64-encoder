@@ -2,6 +2,8 @@
 
 The online living [Base64](https://www.wikidata.org/wiki/Q726780) Encoder & Decoder.
 
+![screenshort](screenshort.png)
+
 [1]: http://www.rfc-editor.org/rfc/rfc822.txt "RFC-822"
 [2]: http://www.rfc-editor.org/rfc/rfc2045.txt "RFC-2045"
 [3]: http://www.rfc-editor.org/rfc/rfc2046.txt "RFC-2046"
