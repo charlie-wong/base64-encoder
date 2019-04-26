@@ -95,7 +95,7 @@
 
 <body>
     <a href="https://gkide.github.io/online-base64">
-        <img style="position: absolute; z-index: 2; top: 0; left: 0; border: 0;"
+       <img style="position: absolute; z-index: 2; top: 0; left: 0; border: 0;"
         src="data:image/png;base64,
 iVBORw0KGgoAAAANSUhEUgAAAJUAAACVCAYAAABRorhPAAAAGXRFWHRTb2Z0d2FyZQBBZ
 G9iZSBJbWFnZVJlYW R5ccllPAAAHEFJREFUeNrsXWlwVNeVPg1aQCtowTaoJdSL1NrQh
@@ -276,7 +276,8 @@ mDABKmHBZ/8vwACkAXHUCodrdwAAAABJRU5ErkJggg=="
                 readerAsBuf.readAsArrayBuffer(file);
                 readerAsBuf.onload = function (event) {
                     ab2str(event.target.result, function(b64txt) {
-                        if (/^data:application\/[a-z0-9\.-]+;base64,/.test(b64txt)
+                        if (/^data:;base64,/.test(b64txt)
+                            ||/^data:application\/[a-z0-9\.-]+;base64,/.test(b64txt)
                             || /^data:audio\/[a-z0-9\.-]+;base64,/.test(b64txt)
                             || /^data:image\/[a-z0-9\.-]+;base64,/.test(b64txt)
                             || /^data:message\/[a-z0-9\.-]+;base64,/.test(b64txt)
